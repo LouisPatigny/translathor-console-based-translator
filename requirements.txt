@@ -1,0 +1,6 @@
+﻿requests
+python-dotenv
+deep-translator
+iso639
+elevenlabs
+httpx

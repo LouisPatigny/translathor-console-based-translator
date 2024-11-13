@@ -21,18 +21,36 @@ This documentation provides developers with a detailed understanding of the syst
 - **Python** (3.9+)
 - **DeepL API** (for translation)
 - **ElevenLabs API** (for text-to-speech)
-- **dotenv** (environment variable management)
+- **python-dotenv** (environment variable management)
 - **requests** (HTTP requests handling)
-- **googletrans** (Google Translate integration for additional language support)
+- **deep-translator** (DeepL API integration)
+- **iso639** (language code conversion)
+- **httpx** (required by ElevenLabs API client)
 
 ---
 
 ## Project Structure Summary
 
+```
+translation-tool/
+├── src/
+│   ├── config.py
+│   ├── main.py
+│   ├── translator.py
+│   ├── tts.py
+│   └── utils.py
+├── tmp/
+│   └── ... (temporary audio files)
+├── .env
+├── .gitignore
+├── README.md
+├── requirements.txt
+```
 
 - **src/**: Contains all source code modules.
 - **tmp/**: Directory for storing temporary audio files during playback.
 - **.env**: Environment configuration file for sensitive keys.
+- **requirements.txt**: Lists all Python dependencies required for the project.
 - **README.md**: Project documentation.
 
 ---
@@ -49,6 +67,37 @@ DEFAULT_TARGET_LANGUAGE=FR                   # Default language code (e.g., 'FR'
 OUTPUT_AUDIO_PATH=tmp                        # Folder to store audio files
 ```
 
+---
+
+## Usage
+
+To use Translathor, follow these steps:
+
+1. **Install Dependencies**:
+   Install the required dependencies by running:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Set Up Environment Variables**: Make sure you have configured your `.env` file with the necessary API keys and settings (see [Required Environment Variables](#required-environment-variables)).
+
+**Run the Application**: Start the tool by running the `main.py` file:
+
+```bash
+python src/main.py
+```
+
+**Using the Menu**: The application will present a menu with the following options:
+
+1. **Translate text**: Enter text and select a target language for translation.
+2. **Set default target language**: Change the default target language.
+3. **Display supported languages**: Shows a list of languages supported by DeepL.
+4. **Exit**: Quit the application.
+
+**Text-to-Speech Option**: After a successful translation, you’ll be prompted to play the translated text using ElevenLabs. Select "y" to hear the translation or "n" to skip.
+
+
 ## Technical Details
 
 ### `src/config.py`
@@ -59,15 +108,14 @@ Acts as the main entry point for the tool, providing a CLI for translation and T
 
 #### Key Responsibilities:
 - **Command Menu**: Provides options to translate text, set a default language, display supported languages, and exit.
-- **Translation Handling**: Uses DeepL for supported languages and falls back to Google Translate for unsupported ones.
+- **Translation Handling**: Uses DeepL for detecting and translating language.
 - **Text-to-Speech**: Utilizes ElevenLabs to convert translations into audio.
 
 ### `src/translator.py`
 Handles translation functionality, including:
 
-- **Language Validation**: Verifies language codes supported by DeepL, with Google Translate as a fallback.
+- **Language Validation**: Verifies language codes supported by DeepL.
 - **DeepL Integration**: Translates text via DeepL’s API for supported languages.
-- **Google Translate Integration**: Uses Google Translate for additional languages unsupported by DeepL.
 
 ### `src/tts.py`
 Provides text-to-speech functionality using the ElevenLabs API.
@@ -82,29 +130,14 @@ Contains utility functions for displaying the command-line banner and managing u
 ---
 
 ## Dependencies Glossary
-```
-translation-tool/
-├── src/
-│   ├── config.py
-│   ├── main.py
-│   ├── translator.py
-│   ├── tts.py
-│   └── utils.py
-├── tmp/
-│   └── ... (temporary audio files)
-├── .env
-├── .gitignore
-├── README.md
-```
 
 ### Production Dependencies
-- `requests`: Used for making HTTP requests to DeepL and ElevenLabs APIs.
-- `dotenv`: Manages environment variables securely.
-- `googletrans`: Provides fallback translation using Google Translate for unsupported languages in DeepL.
-
-### Development Dependencies
-- `pytest`: For testing.
-- `flake8`: Linting and code style checks.
+- `requests`: Used for making HTTP requests to the DeepL and ElevenLabs APIs.
+- `python-dotenv`: Manages environment variables securely.
+- `deep-translator`: Enables translation functionality using the DeepL API.
+- `iso639`: Provides language code to language name conversions.
+- `elevenlabs`: Handles text-to-speech functionality using the ElevenLabs API.
+- `httpx`: Required by the ElevenLabs API client for HTTP requests.
 
 ---
 
@@ -112,12 +145,6 @@ translation-tool/
 
 ### DeepL API
 The DeepL API is the primary translation service, supporting a wide range of language codes. It dynamically fetches the list of supported languages from DeepL’s `/languages` endpoint to stay up-to-date.
-
-#### Error Handling:
-- **Fallback**: If DeepL does not support the target language or encounters an error, the tool automatically falls back to Google Translate.
-
-### Google Translate
-Implemented as a fallback using the `googletrans` library, this ensures translation support for additional languages beyond those offered by DeepL.
 
 ### ElevenLabs API
 Handles TTS by converting translated text into audio. The tool uses the provided `VOICE_ID` to generate audio with the ElevenLabs TTS engine.
