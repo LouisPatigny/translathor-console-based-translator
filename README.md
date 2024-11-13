@@ -1,6 +1,6 @@
 ﻿# Translathor - Technical Documentation
 
-_A technical guide for the Translathor built with Python, integrating DeepL and ElevenLabs APIs for multilingual translation and text-to-speech functionality.  
+_A technical guide for Translathor built with Python, integrating DeepL and ElevenLabs APIs for multilingual translation and text-to-speech functionality.  
 This documentation provides developers with a detailed understanding of the system architecture, supported features, and integration points._
 
 ---
