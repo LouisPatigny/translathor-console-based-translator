@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 # Load environment variables from .env file
-dotenv_path = find_dotenv('.env', raise_error_if_not_found=True)
+dotenv_path = find_dotenv('../.env', raise_error_if_not_found=True)
 load_dotenv(dotenv_path=dotenv_path, override=True)
 
 # API Keys and URLs
