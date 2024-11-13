@@ -1,0 +1,59 @@
+﻿# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment folders
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+*.env
+
+# Pycharm project settings
+.idea/
+
+# VS Code settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+Desktop.ini
+
+# Environment variables file (contains API keys and sensitive information)
+.env
+
+# Audio output files and temporary files
+tmp/
+audio_output/
+*.mp3
+
+# Log files
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+
+# Testing and debug output
+.tox/
+nosetests.xml
+coverage.xml
+*.py,cover
+
+# Generated docs
+/build/
